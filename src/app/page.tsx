@@ -1,6 +1,7 @@
 import { format as formatDate } from "date-fns";
 import { SSRWithHydrationDate } from "./SSRWithHydrationDate";
 import lazy from "next/dynamic";
+import Link from "next/link";
 import { Suspense } from "react";
 import { DateFormatter } from "./DateFormatter";
 const ClientSideOnly = lazy(() => import("./ClientSideOnly"), {
@@ -19,7 +20,7 @@ export const dynamic = "force-dynamic";
 export const runtime = "edge";
 export default function Home() {
   return (
-    <main className="grid min-h-[90svh] place-items-center">
+    <main className="grid min-h-[98svh] place-items-center">
       <div className="grid grid-cols-[auto,auto,auto,auto,auto,auto] gap-4 max-w-7xl mx-auto">
         <span className="border-b p-2">Type</span>
         <span className="border-b p-2">Result</span>
@@ -35,7 +36,7 @@ export default function Home() {
           of the server, not the user. Sometimes this is what you want, but
           often you want the date to be in the user's timezone.
         </p>
-        <span>No ❌</span>
+        <span>No ✅</span>
         <span>No ❌</span>
         <span>No ❌</span>
 
@@ -47,7 +48,7 @@ export default function Home() {
           it hydrates on the client, it uses the clients timezone to render in
           local time. This causes the dreaded hydration mismatch error.
         </p>
-        <span>Yes ✅</span>
+        <span>Yes ❌</span>
         <span>Yes ✅</span>
         <span>Yes ✅</span>
 
@@ -60,9 +61,9 @@ export default function Home() {
           server. If you're going to fetch the datetime client side then this is
           fine, or if the user is say entering a calendar input, then this is
           perfectly fine. Because the client is responsible for generating and
-          displaying the date
+          displaying the date in the users timezone.
         </p>
-        <span>No ❌</span>
+        <span>No ✅</span>
         <span>Yes ✅</span>
         <span>Yes ✅</span>
 
@@ -71,12 +72,13 @@ export default function Home() {
           <ServerSideDateRenderedClientSide date={new Date()} />
         </Suspense>
         <p>
-          This is 'the solution' to have the date generated on the server, but
-          then rendered only on the client. In the initial render, the server
-          displays a loading message (a loading skeleton would look good). Then
-          when the client hydrates, it renders the date in the users timezone.
+          This is 'the solution' to have the date generated / fetched on the
+          server, but then rendered in the client's timezone. In the initial
+          render, the server displays a loading message (a loading skeleton
+          would look good). Then when the client hydrates, it renders the date
+          in the users timezone.
         </p>
-        <span>No ❌</span>
+        <span>No ✅</span>
         <span>Yes ✅</span>
         <span>Yes ✅</span>
 
@@ -88,10 +90,16 @@ export default function Home() {
           />
         </span>
         <p>An implementation of the above solution as a reusable component.</p>
-        <span>No ❌</span>
+        <span>No ✅</span>
         <span>Yes ✅</span>
         <span>Yes ✅</span>
       </div>
+      <Link
+        className="text-blue-300 hover:underline"
+        href="https://github.com/NWylynko/nextjs-date-hydration"
+      >
+        Check out the code on Github to view how the dates are rendered
+      </Link>
     </main>
   );
 }
