@@ -8,6 +8,8 @@ type Props = {
 
 export default function ServerSideDateRenderedClientSide(props: Props) {
   return (
-    <span>{formatDate(props.date, "dd/MM/yyyy' 'hh:mm:ss:SSS' 'aaa")}</span>
+    <span className="p-2">
+      {formatDate(props.date, "dd/MM/yyyy' 'hh:mm:ss:SSS' 'aaa")}
+    </span>
   );
 }
